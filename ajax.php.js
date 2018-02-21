@@ -1,7 +1,3 @@
-// ajax.responseType = 'document';
-// ajax.overrideMimeType('text/xml');
-// ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
 
 var request = function (prm){
 	var respText,ajax ;
