@@ -4,25 +4,22 @@
 ``` 
 
 Ajax({
-	// method: default GET 
-	url   :'testAjax.php',
+	method: 'GET' // default GET 
+	url   :'url',
 	argv  :"name=alaa",
 	done:(d)=>{
 		// d object { dom, text }
 		// dom == resulty = doucment( <ajaxresponsedocument></ajaxresponsedocument> )
-		// get Class '#TAjax' from testAjax.php
-		
-		d.dom.getElementsByClassName('#TAjax');
-		// or 
-		select(''#TAjax'');
-		
 	},
 	error:(e)=>{
 		// e object { status, text }
-	}
+	},
 	start:()=>{
 		// in start connect 
-	}
+	},
+	chnage:(xhr)=>{
+		// 
+	},
 	header:{
 		// key : value// 
 	}
@@ -31,7 +28,7 @@ Ajax({
 
 
 ```
-select()=>{
+select(' TagName or id or ClassName ')=>{
 	append()
 	childeOf(index)
 	remove(element)
@@ -40,4 +37,37 @@ select()=>{
 	set(k,v) and get(k) and del(k) -> attr
 	element 
 }
+```
+### exmple 
+
+```
+<script src="ajax.php.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	// select id #TAjax 
+	var ta = select('#TAjax')
+	Ajax({
+
+		url:"testAjax.php",
+		argv:"name=alaa",
+		start:()=>{
+			ta.text("Loading ...")
+			ta.css ("color","blue");
+		},
+		done:(d)=>{
+
+			ta.text(" ");
+			ta.append(
+				// select class .content from testAjax.php 
+				select('.content',d.dom).element 
+				// and add To id #TAjax
+			);
+			ta.css ("color","#333");
+		},
+		error:(e)=>{
+			ta.text(e.status)
+			ta.css ("color","red");
+		}
+
+	});
+</script>
 ```
