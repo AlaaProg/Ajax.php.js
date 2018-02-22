@@ -29,10 +29,10 @@ Ajax({
 
 ```
 select(' TagName or id or ClassName ')=>{
-	append()
+	append(element)
 	childeOf(index)
-	remove(element)
-	text()
+	remove()
+	text() return HTML | text(val) set
 	css(k,v)
 	set(k,v) and get(k) and del(k) -> attr
 	element 
