@@ -1,33 +1,75 @@
 
-var request = function (prm){
-	var respText,ajax ;
+
+var Ajax = function (prm){
+
 	if (window.XMLHttpRequest) {
-	    ajax = new XMLHttpRequest();
+	    var ajax = new XMLHttpRequest();
 	}else if(window.ActiveXObject){ 
-		ajax = new ActiveXObject("Microsoft.XMLHTTP");
+		var ajax = new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	
-	ajax.onreadystatechange = function(){
+
+	if(prm.method){
+		method = prm.method.toUpperCase();
+	}else{
+		method = "GET";
+	}
+
+	if(prm.method == "GET"){
+		prm.url = prm.url+"?"+prm.argv;
+	}
+
+	// toUpperCase
+	ajax.open(method,prm.url,true);
+
+	// start
+	ajax.addEventListener('loadstart', function(e) {
+		if(prm.start){ prm.start() }
+	});
+	// chnage
+	ajax.addEventListener('readystatechange',function(e){
+		if(prm.change){
+			prm.change(this);
+		}
+	});
+
+	// done
+	ajax.addEventListener('loadend', function(e) {
 		if (this.readyState == 4){
 			if (this.status == 200){
-				if(prm.response){
-					tagName = prm.url.split('/').reverse()
-					prm.response( h2dom( tagName[0].split('.')[0],this.responseText ) )
+				if(prm.done){
+					
+					prm.done( { 
+						dom      :h2dom( "AjaxResponseDocument" , this.responseText ),
+						text :this.responseText
+					 })
 				}
+			}else{ 
+				if(prm.error){ 
+					prm.error({ 
+						status:this.statusText,
+						text  :this.responseText
+					})
+				}
+			}
+		}
+	});
 
-			}else{if(prm.error){prm.error(ajax.statusText);}}
+
+	if (prm.header){
+	 	Object.keys(prm.header).forEach(function(key){
+	 		ajax.setRequestHeader(key,prm.header[key]);
+	 	});
+ 	}else{
+ 		
+ 		if(method == "POST"){
+			ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 		}
  	}
 
-
- 	ajax.open(prm.method,prm.url,true);
-
- 	Object.keys(prm.header).forEach(function(key){
- 		ajax.setRequestHeader(key,prm.header[key]);
- 	});
-
  	
 	ajax.send(prm.argv);
+
+
 
 }
 
@@ -78,6 +120,6 @@ var select = function (id_class,dom=document){
 
 function h2dom(tagName,html){
 	var tag = document.createElement(tagName);
-	tag.innerHTML = html 
+	tag.innerHTML = html
 	return tag
 }
