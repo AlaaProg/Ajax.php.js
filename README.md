@@ -38,7 +38,7 @@ select(' TagName or id or ClassName ')=>{
 	element 
 }
 ```
-### eaxmple 
+### example 
 
 ```
 <script src="ajax.php.js" type="text/javascript" charset="utf-8"></script>
