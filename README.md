@@ -6,7 +6,7 @@
 Ajax({
 	method: 'GET' // default GET 
 	url   :'url',
-	argv  :"name=alaa",
+	argv  :"key=val&key=val",
 	done:(d)=>{
 		// d object { dom, text }
 		// dom == resulty = doucment( <ajaxresponsedocument></ajaxresponsedocument> )
@@ -38,7 +38,7 @@ select(' TagName or id or ClassName ')=>{
 	element 
 }
 ```
-### exmple 
+### eaxmple 
 
 ```
 <script src="ajax.php.js" type="text/javascript" charset="utf-8"></script>
