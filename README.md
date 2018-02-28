@@ -3,71 +3,102 @@
 
 ``` 
 
-Ajax({
-	method: 'GET' // default GET 
-	url   :'url',
-	argv  :"key=val&key=val",
-	done:(d)=>{
-		// d object { dom, text }
-		// dom == resulty = doucment( <ajaxresponsedocument></ajaxresponsedocument> )
-	},
-	error:(e)=>{
-		// e object { status, text }
-	},
-	start:()=>{
-		// in start connect 
-	},
-	chnage:(xhr)=>{
-		// 
-	},
-	header:{
-		// key : value// 
-	}
-});
-```
+var req = new Request();
 
 
-```
-select(' TagName or id or ClassName ')=>{
-	append(element)
-	childeOf(index)
-	remove()
-	text() return HTML | text(val) set
-	css(k,v)
-	set(k,v) and get(k) and del(k) -> attr
-	element 
+req.start = function(){
+
+	// run with all requests 
+
 }
+
+req.error = function(e){
+	// run with all requests 
+	alert(e.status);
+}
+
+
+req._get("url",function(d){
+	
+});
+
+req._post("url","argvs=alaa",function(d){
+	
+});
+
+req._put("url","argvs=alaa",function(d){
+	
+});
+
+req._put("url","argvs=alaa",function(d){
+	
+});
+
+
+
+```
+
+
+```
+select('element')
+.css("key","value") 
+.css("key")
+.find("element") // search inset element 
+.remove() // delete self
+.remove("element") // delete child
+.append("element")
+.setattr(key,value)
+.getattr("key")
+.delattr("key")
+.text() // return value text 
+.text("value") // set text to element 
+.html() // return element 
+.html("value") // setElement 
+.back() //  back to Element 
+.show() //
+.hide() // 
+.el     // return element(document)
 ```
 ### example 
 
 ```
 <script src="ajax.php.js" type="text/javascript" charset="utf-8"></script>
 <script>
-	// select id #TAjax 
-	var ta = select('#TAjax')
-	Ajax({
+	var req = new Request();
 
-		url:"testAjax.php",
-		argv:"name=alaa",
-		start:()=>{
-			ta.text("Loading ...")
-			ta.css ("color","blue");
-		},
-		done:(d)=>{
+	var con = select(".content")
 
-			ta.text(" ");
-			ta.append(
-				// select class .content from testAjax.php 
-				select('.content',d.dom).element 
-				// and add To id #TAjax
+	req.start = function(){
+		console.log("Start Looding.......")
+	}
+
+	req.error = function(e){
+		alert(e.status);
+	}
+
+	req._get("testAjax.php",function(d){
+
+		var from = select(".get",d.dom).find(".from")
+		con.append(
+			from.el
+		);
+
+
+		select("#search").event("click",function(){
+			req._post(
+				"testAjax.php",
+				"name="+from.find("#name").value(),
+
+				function(d){
+					if(con.find(".post").el){
+						con.find(".post").html(select(".post",d.dom).html());
+					}else{
+						con.append(select(".post",d.dom).el);
+					}
+				}
 			);
-			ta.css ("color","#333");
-		},
-		error:(e)=>{
-			ta.text(e.status)
-			ta.css ("color","red");
-		}
-
+		});
 	});
+
 </script>
 ```
