@@ -1,29 +1,46 @@
-<<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>TestAjax</title>
-	<link rel="stylesheet" href="">
-</head>
-<body>
+
+<?php 
+
+	$_DELETE = array();
+	$_PUT = array();
+	$method = $_SERVER['REQUEST_METHOD'];
+	if($method == "PUT"){
+		parse_str(
+			file_get_contents("php://input"),
+			$_PUT
+		);
+	}elseif($method == "DELETE"){
+		parse_str(
+			file_get_contents("php://input"),
+			$_DELETE
+		);
+
+	}
+
+
+
+?>
+
 	
-<div class="content">
-	<pre>
+<div class="get">
+
+	<div class="from">
 		
-		<?php 
-			if(!empty($_POST)){
-				print_r($_POST);
-			}elseif(!empty($_GET)){
-				print_r($_GET);
-			}else{
-				echo "HEllo WOrld";
-			}
-		?>
-		
-	</pre>
+		<input type="text" name="name" id="name">
+		<input type="submit" id="search" name="search" value="Search">
+
+	</div>
 
 </div>
 
-</body>
-</html>
+
+<div class="post">
+
+	<p class="c02"> 
+		Hello <?php if( isset($_POST["name"])){ echo $_POST["name"]; } ?> <br>
+
+		We happy *-*!!
+	</p>
+
+</div>
+
